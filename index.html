@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Issues Tracker</title>
+
+    <!-- Google Font Geist -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind and Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        *{
+            font-family: "Geist", sans-serif;
+            
+        }
+    </style>
+
+
+</head>
+
+<body class="bg-[#F8FAFC]">
+
+    <section class="min-h-screen flex items-center justify-center">
+        <div class="w-[520px] mx-auto bg-white space-y-5 p-8 rounded-xl">
+            <div class="text-center">
+                <img class="mx-auto" src="./assets/github-logo.png" alt="">
+                <h3 class="text-2xl font-bold mt-4 mb-1">GitHub Issues Tracker</h3>
+                <p class="text-[#64748B]">Sign in to manage your issues</p>
+            </div>
+            <div class="space-y-2">
+                <p class="font-semibold">Username</p>
+                <input class="tex-[#64748B] p-2 border-gray-300 rounded-md w-full" type="text" name="" placeholder="Enter Username" id="">
+                <p class="text-blue-600 text-sm">default: admin</p>
+                <p class="font-semibold">Password</p>
+                <input class="tex-[#64748B] p-2 border-gray-300 rounded-md w-full" type="password" name="" placeholder="Enter Password" id="">
+                <p class="text-blue-600 text-sm">Default: admin123</p>
+                <input class="btn btn-primary w-full" type="button" value="Sign In">
+            </div>
+            <div class="divider">OR</div>
+            <div class="text-center">
+                <p class="mb-2">Demo Creditionals:</p>
+                <div class="bg-gray-200 p-7 rounded-lg">
+                    <p><span class="font-semibold">Username:</span> admin</p>
+                    <p><span class="font-semibold">Password:</span> admin123</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</body>
+
+</html>
