@@ -149,7 +149,7 @@ const displayIssue = (issues) => {
     issues.forEach(issue => {
         const createElements = document.createElement('div');
         createElements.innerHTML = `
-        <div class="bg-white p-7 space-y-3 rounded-xl shadow border-t-4 ${getStatus(issue.status)} ">
+        <div onclick="my_modal_5.showModal()" class="bg-white p-7 space-y-3 rounded-xl shadow border-t-4 ${getStatus(issue.status)} ">
                 <div class="flex items-center justify-between">
                     <img class="w-8 h-8" src="${statusIcon[issue.status]}" alt="">
                     <button class="${getPriorityColor(issue.priority)} px-4 py-1 rounded-3xl">${issue.priority.toUpperCase()}</button>
