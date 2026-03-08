@@ -120,7 +120,25 @@ const formatDate = (dateString) =>{
 
 
 // Search Function------------------------------------------
+document.getElementById('input-search').addEventListener('input', ()=>{
+    const inputSearch = document.getElementById('input-search')
+    const searchValue = inputSearch.value.toLowerCase();
 
+    if(searchValue === ""){
+        displayIssue(allIssue);
+        updateIssueCount(allIssue);
+        return;
+    }
+    
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+    .then(response=>response.json())
+    .then(data=>{
+        const searchData = data.data;
+        const filterWord = searchData.filter(word=>word.title.toLowerCase().includes(searchValue));
+        displayIssue(filterWord);
+        updateIssueCount(filterWord);
+    })
+})
 
 
 // Display Issue Card---------------------------------------
