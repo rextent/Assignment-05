@@ -71,22 +71,56 @@ function getPriorityColor(priority){
 }
 
 
-
+function updateIssueCount(issues){
+    const count = issues.length;
+    document.getElementById('total-issue').innerText = count;
+}
 
 // Load Issues--------------------------------------------
+let allIssue = [];
 const loadIssues = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(response => response.json())
-        .then(data => displayIssue(data.data));
+        .then(data => {
+            allIssue =data.data;
+            displayIssue(allIssue);
+            updateIssueCount(allIssue);
+        });
 }
 loadIssues();
 
+// Filter Function----------------------------------------
+function filterIssues(status, button){
+    const buttons = document.querySelectorAll('.filter-btn');
 
+    buttons.forEach(btn=>{
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-soft');    
+    });
+
+    if(button){
+        button.classList.remove('btn-soft');
+        button.classList.add('btn-primary');
+    }
+
+    if(status==='all'){
+        displayIssue(allIssue);
+        updateIssueCount(allIssue);
+        return;
+    }
+    const filtered = allIssue.filter(issue => issue.status === status);
+    displayIssue(filtered);
+    updateIssueCount(filtered);
+};
 
 // Date Formating------------------------------------------
 const formatDate = (dateString) =>{
     return new Date(dateString).toLocaleDateString('en-US');
 };
+
+
+// Search Function------------------------------------------
+
 
 
 // Display Issue Card---------------------------------------
@@ -97,7 +131,7 @@ const displayIssue = (issues) => {
     issues.forEach(issue => {
         const createElements = document.createElement('div');
         createElements.innerHTML = `
-        <div class="bg-white p-7 space-y-3 rounded-xl  border-t-4 ${getStatus(issue.status)} ">
+        <div class="bg-white p-7 space-y-3 rounded-xl shadow border-t-4 ${getStatus(issue.status)} ">
                 <div class="flex items-center justify-between">
                     <img class="w-8 h-8" src="${statusIcon[issue.status]}" alt="">
                     <button class="${getPriorityColor(issue.priority)} px-4 py-1 rounded-3xl">${issue.priority.toUpperCase()}</button>
@@ -106,7 +140,7 @@ const displayIssue = (issues) => {
                     <h3 class="text-[18px] font-bold text-[#1F2937]">${issue.title}</h3>
                     <p class="text-[#64748B] text-sm">${issue.description}</p>
                 </div>
-                <div class="flex flex-wrap gap-2">${generateLabels(issue.labels)}</div>
+                <div class="flex flex-wrap gap-1 text-sm">${generateLabels(issue.labels)}</div>
                 <div class="divider"></div>
                 <div>
                     <p class="text-[#64748B]"># ${issue.id} by ${issue.author}</p>

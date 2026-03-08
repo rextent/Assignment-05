@@ -54,9 +54,9 @@
     <!-- Filter Section -->
     <section class="mt-15 w-8/12 mx-auto ">
         <div class=" bg-white p-6 rounded-lg flex-wrap flex gap-3">
-            <button class="btn btn-primary w-25">All</button>
-            <button class="btn btn-soft w-25">Open</button>
-            <button class="btn btn-soft w-25">Closed</button>
+            <button onclick="filterIssues('all', this)" class="btn filter-btn btn-primary w-25">All</button>
+            <button onclick="filterIssues('open', this)" class="btn filter-btn btn-soft w-25">Open</button>
+            <button onclick="filterIssues('closed', this)" class="btn filter-btn btn-soft w-25">Closed</button>
         </div>
     </section>
 
