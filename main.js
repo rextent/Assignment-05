@@ -50,13 +50,23 @@ const generateLabels = (labels) =>{
     }).join("");
 }
 
+// Modal Status Color
+function getStatusColor (status){
+    if(status === 'open'){
+        return 'bg-green-500 text-white px-2 py-1 rounded-3xl'
+    }
+    {
+        return 'bg-violet-500 text-white px-2 py-1 rounded-3xl'
+    }
+}
+
 
 // Top Border Color by Status
 function getStatus (status){
     if(status === 'open'){
         return "border-green-500"
     }
-    return 'border-violet-500'
+    return "border-violet-500"
 }
 
 // Priority Color---------------
@@ -88,6 +98,44 @@ const loadIssues = () => {
         });
 }
 loadIssues();
+
+// Load Issue Details Modal
+const loadIssueDetail = async (id)=>{
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayIssueDetail(data.data);
+}
+const displayIssueDetail = (issue) => {
+    const detailIssueContainer = document.getElementById('modal-container');
+    detailIssueContainer.innerHTML = `
+    <div class = " flex flex-col gap-5">
+        <h2 class="text-xl font-bold">${issue.title}</h2>
+        <div class="flex gap-3 items-center">
+            <p class="${getStatusColor(issue.status)}">${issue.status}</p>
+            <p class="bg-gray-700 rounded-full w-2 h-2"></p>
+            <p>Opened by ${issue.author}</p>
+            <p class="bg-gray-700 rounded-full w-2 h-2"></p>
+            <p>${formatDate(issue.createdAt)}</p>
+        </div>
+        <div>
+            ${generateLabels(issue.labels)}
+        </div>
+        <p>${issue.description}</p>
+        <div class="bg-gray-200 p-5 rounded-lg flex justify-between">
+            <div class="">
+                <p>Assignee</p>
+                <p class="text-xl font-bold">${issue.author}</p>
+            </div>
+            <div>
+                <p>Priority</p>
+                <button class="${getPriorityColor(issue.priority)} px-4 py-1 rounded-3xl">${issue.priority.toUpperCase()}</button>
+            </div>
+        </div>
+    </div>
+    `
+    document.getElementById('my_modal_5').showModal();
+}
 
 // Filter Function----------------------------------------
 function filterIssues(status, button){
@@ -149,14 +197,14 @@ const displayIssue = (issues) => {
     issues.forEach(issue => {
         const createElements = document.createElement('div');
         createElements.innerHTML = `
-        <div onclick="my_modal_5.showModal()" class="bg-white p-7 space-y-3 rounded-xl shadow border-t-4 ${getStatus(issue.status)} ">
+        <div onclick="loadIssueDetail(${issue.id})" class="bg-white p-7 space-y-3 rounded-xl shadow border-t-4 h-full ${getStatus(issue.status)} ">
                 <div class="flex items-center justify-between">
                     <img class="w-8 h-8" src="${statusIcon[issue.status]}" alt="">
                     <button class="${getPriorityColor(issue.priority)} px-4 py-1 rounded-3xl">${issue.priority.toUpperCase()}</button>
                 </div>
                 <div>
                     <h3 class="text-[18px] font-bold text-[#1F2937]">${issue.title}</h3>
-                    <p class="text-[#64748B] text-sm">${issue.description}</p>
+                    <p class="text-[#64748B] text-sm line-clamp-2">${issue.description}</p>
                 </div>
                 <div class="flex flex-wrap gap-1 text-sm">${generateLabels(issue.labels)}</div>
                 <div class="divider"></div>
